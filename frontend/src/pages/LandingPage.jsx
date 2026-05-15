@@ -81,7 +81,7 @@ export const LandingPage = () => {
             <div className="absolute inset-0 bg-neon-gradient blur-[80px] opacity-20 rounded-full animate-pulse" />
             <div className="relative glass p-4 rounded-[48px] border-white/10 shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-700">
               <img 
-                src="C:/Users/hp/.gemini/antigravity/brain/8888cf45-c324-47e8-b128-2b48b269c9a1/futuristic_app_mockup_1778797207255.png" 
+                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1000" 
                 alt="App Mockup" 
                 className="rounded-[36px] shadow-2xl border border-white/5"
               />

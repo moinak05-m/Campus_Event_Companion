@@ -164,6 +164,7 @@ export const AuthPage = () => {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       required={!isLogin}
+                      autoComplete="name"
                       className="w-full glass border-white/10 rounded-xl px-4 py-3 text-sm focus:border-primary-cyan transition-colors"
                     />
                   </motion.div>
@@ -180,6 +181,7 @@ export const AuthPage = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
+                    autoComplete="email"
                     className="w-full glass border-white/10 rounded-xl pl-12 pr-4 py-3 text-sm focus:border-primary-cyan transition-colors"
                   />
                 </div>
@@ -195,6 +197,7 @@ export const AuthPage = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
+                    autoComplete={isLogin ? "current-password" : "new-password"}
                     className="w-full glass border-white/10 rounded-xl pl-12 pr-4 py-3 text-sm focus:border-primary-cyan transition-colors"
                   />
                 </div>

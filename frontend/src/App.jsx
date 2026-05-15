@@ -16,12 +16,13 @@ import { QRScanner } from "./pages/QRScanner";
 import { AttendanceDashboard } from "./pages/AttendanceDashboard";
 import { OrganizerAnalytics } from "./pages/OrganizerAnalytics";
 import { OrganizerCalendar } from "./pages/OrganizerCalendar";
-
+import { CreateEvent } from "./pages/createEvent";
+import { AboutPage } from "./pages/AboutPage";
 import { Navbar } from "./components/layout/Navbar";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
-  
+
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
@@ -39,6 +40,8 @@ const AnimatedRoutes = () => {
         <Route path="/organizer/attendance" element={<AttendanceDashboard />} />
         <Route path="/organizer/analytics" element={<OrganizerAnalytics />} />
         <Route path="/organizer/calendar" element={<OrganizerCalendar />} />
+        <Route path="/organizer/create" element={<CreateEvent />} />
+        <Route path="/about" element={<AboutPage />} />
       </Routes>
     </AnimatePresence>
   );

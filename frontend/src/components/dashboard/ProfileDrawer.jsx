@@ -3,19 +3,24 @@ import { X, Mail, School, BookOpen, Star, Trophy, Calendar, Sparkles } from "luc
 import { GlassCard } from "../ui/GlassCard";
 import { CategoryChip } from "../ui/CategoryChip";
 import { NeonButton } from "../ui/NeonButton";
+import { useAuth } from "../../context/AuthContext";
 
 export const ProfileDrawer = ({ isOpen, onClose }) => {
+  const { user: authUser } = useAuth();
+
+  // Don't render the drawer content if not logged in
+  if (!authUser) return null;
+
   const user = {
-    name: "Rahul Sharma",
-    dept: "Computer Science",
-    college: "Institute of Engineering & Tech",
-    email: "rahul.sharma@iet.edu",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Rahul",
-    interests: ["Hackathons", "AI/ML", "Coding", "Gaming"],
+    name: authUser.name || "Student",
+    role: authUser.role === 'admin' ? "Organizer" : "Student",
+    email: authUser.email,
+    avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${authUser.name || 'User'}`,
+    interests: [], // Real data would come from backend in the future
     stats: {
-      attended: 12,
-      points: "2.4k",
-      badges: 8
+      attended: 0,
+      points: 0,
+      badges: 0
     }
   };
 
@@ -56,12 +61,10 @@ export const ProfileDrawer = ({ isOpen, onClose }) => {
                 </div>
               </div>
               <h3 className="text-3xl font-black mb-1">{user.name}</h3>
-              <p className="text-primary-cyan text-sm font-bold uppercase tracking-widest mb-6">Pro Member</p>
+              <p className="text-primary-cyan text-sm font-bold uppercase tracking-widest mb-6">{user.role}</p>
               
               <div className="space-y-3 w-full">
                 <ProfileInfoItem icon={Mail} label={user.email} />
-                <ProfileInfoItem icon={School} label={user.college} />
-                <ProfileInfoItem icon={BookOpen} label={user.dept} />
               </div>
             </div>
 
@@ -75,25 +78,23 @@ export const ProfileDrawer = ({ isOpen, onClose }) => {
             </div>
 
             {/* Interests */}
-            <div className="mb-12">
-              <h4 className="text-sm font-black uppercase tracking-widest mb-6 flex items-center gap-2">
-                <Star size={14} className="text-accent-warning" /> Selected Interests
-              </h4>
-              <div className="flex flex-wrap gap-3">
-                {user.interests.map(interest => (
-                  <CategoryChip key={interest} label={interest} isSelected={true} />
-                ))}
+            {user.interests.length > 0 && (
+              <div className="mb-12">
+                <h4 className="text-sm font-black uppercase tracking-widest mb-6 flex items-center gap-2">
+                  <Star size={14} className="text-accent-warning" /> Selected Interests
+                </h4>
+                <div className="flex flex-wrap gap-3">
+                  {user.interests.map(interest => (
+                    <CategoryChip key={interest} label={interest} isSelected={true} />
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Recent Activity */}
             <div className="mb-10">
               <h4 className="text-sm font-black uppercase tracking-widest mb-6">Recent Participation</h4>
-              <div className="space-y-4">
-                <ActivityItem title="Tech Expo 2026" status="Completed" date="May 10" />
-                <ActivityItem title="AI Ethics Seminar" status="Attended" date="May 08" />
-                <ActivityItem title="Sports Meet" status="Winner" date="May 05" color="text-accent-success" />
-              </div>
+              <p className="text-sm text-text-muted italic">No recent events. Start exploring!</p>
             </div>
 
             <NeonButton className="w-full py-4 text-lg mt-auto">

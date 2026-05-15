@@ -1,8 +1,7 @@
-import { motion } from "framer-motion";
 import { GlassCard } from "../ui/GlassCard";
 import { TrendingUp, TrendingDown } from "lucide-react";
 
-export const AnalyticsCard = ({ label, value, trend, icon: Icon, color = "purple" }) => {
+export const AnalyticsCard = ({ label, value, trend, icon: Icon, color = "white" }) => {
   const colors = {
     purple: "text-primary-purple bg-primary-purple/10 border-primary-purple/20 shadow-neon-purple/20",
     cyan: "text-primary-cyan bg-primary-cyan/10 border-primary-cyan/20 shadow-neon-cyan/20",
@@ -24,7 +23,7 @@ export const AnalyticsCard = ({ label, value, trend, icon: Icon, color = "purple
           {Math.abs(trend)}%
         </div>
       </div>
-      
+
       <div>
         <h4 className="text-3xl font-black mb-1 tracking-tight">{value}</h4>
         <p className="text-[10px] text-text-muted font-black uppercase tracking-widest opacity-70">{label}</p>

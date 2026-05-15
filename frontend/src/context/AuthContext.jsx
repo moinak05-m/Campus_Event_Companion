@@ -11,14 +11,20 @@ export const AuthProvider = ({ children }) => {
     // Check if user is logged in (e.g., fetch user profile using stored token)
     const checkUser = async () => {
       const token = localStorage.getItem('token');
-      if (token) {
+      const savedUser = localStorage.getItem('user');
+      
+      if (token && savedUser) {
         try {
-          // You might want to create a /api/auth/me route in backend for this
-          // For now, we assume token presence = logged in, until API fails
-          setUser({ email: 'user@example.com' }); // Mock user until backend /me exists
+          setUser(JSON.parse(savedUser));
         } catch (error) {
-          console.error("Token verification failed", error);
+          console.error("Failed to parse user data", error);
           localStorage.removeItem('token');
+          localStorage.removeItem('user');
+        }
+      } else {
+        // If there's a token but no user data, clean up
+        if (token) {
+           localStorage.removeItem('token');
         }
       }
       setLoading(false);
@@ -30,7 +36,8 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await api.post('/auth/login', { email, password });
       localStorage.setItem('token', response.data.token);
-      setUser(response.data.data); // Assuming response.data.data is the user object
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      setUser(response.data.user); // Assuming response.data.user is the user object
       return response.data;
     } catch (error) {
       throw error.response?.data || { message: 'An error occurred during login' };
@@ -41,7 +48,8 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await api.post('/auth/signup', { name, email, password, role });
       localStorage.setItem('token', response.data.token);
-      setUser(response.data.data);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      setUser(response.data.user);
       return response.data;
     } catch (error) {
       throw error.response?.data || { message: 'An error occurred during registration' };
@@ -50,6 +58,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     setUser(null);
   };
 
